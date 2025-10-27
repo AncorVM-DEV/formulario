@@ -40,7 +40,9 @@ export default function App() {
     setTouched(true)
     const genderInvalid = !data.gender
     const languageInvalid = !data.language
-    const nameInvalalid = !data.name
+    const nameInvalid = !data.name
+    const surnameInvalid = !data.surname
+    const ageInvalid = !data.age
 
     console.log('Datos enviados:', data)
 
@@ -54,7 +56,9 @@ export default function App() {
 
   const genderInvalid = touched && !data.gender
   const languageInvalid = touched && !data.language
-  const nameInvalalid = touched && !data.language
+  const nameInvalid = touched && !data.name
+  const surnameInvalid = touched && !data.surname
+  const ageInvalid = touched && !data.age
 
   return (
     <Container sx={{ py: 4 }}>
@@ -63,7 +67,7 @@ export default function App() {
           <GridItem container spacing={2}>
           
             <GridItem item xs={12} md={6}>
-              <FormControl required error={nameInvalalid} component="text" variant="standard" fullWidth>
+              <FormControl required error={nameInvalid} component="text" variant="standard" fullWidth>
                 
               <TextField
                 fullWidth required
@@ -72,10 +76,12 @@ export default function App() {
                 value={data.name}
                 onChange={handleChange}
               />
-              {nameInvalalid && <FormHelperText>* Campo Requerido</FormHelperText>}
+              {nameInvalid && <FormHelperText>* Campo Requerido</FormHelperText>}
               </FormControl>
             </GridItem>
+
             <GridItem item xs={12} md={6}>
+              <FormControl required error={surnameInvalid} component="text" variant="standard" fullWidth>
               <TextField
                 fullWidth required
                 label="Apellidos"
@@ -83,10 +89,13 @@ export default function App() {
                 value={data.surname}
                 onChange={handleChange}
               />
+              {surnameInvalid && <FormHelperText>* Campo Requerido</FormHelperText>}
+              </FormControl>
             </GridItem>
 
         
             <GridItem item xs={12} md={6}>
+              <FormControl required error={ageInvalid} component="text" variant="standard" fullWidth>
               <TextField
                 fullWidth required
                 type="number"
@@ -96,6 +105,8 @@ export default function App() {
                 onChange={handleChange}
                 inputProps={{ min: 0, max: 120 }}
               />
+              {ageInvalid && <FormHelperText>* Campo Requerido</FormHelperText>}
+              </FormControl>
             </GridItem>
 
           
