@@ -6,7 +6,11 @@ import {
   Checkbox, Rating, Button, Stack,
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
 } from '@mui/material'
-import GridItem from '@mui/material/Grid' // alias opcional (Grid clásico v1)
+import GridItem from '@mui/material/Grid' 
+<Grid container spacing={2}>
+ <Grid item xs={12} md={6}>…</Grid>
+ <Grid item xs={12} md={6}>…</Grid>
+</Grid>
 
 export default function App() {
   const [data, setData] = useState({
@@ -36,12 +40,11 @@ export default function App() {
     setTouched(true)
     const genderInvalid = !data.gender
     const languageInvalid = !data.language
+    const nameInvalalid = !data.name
 
     console.log('Datos enviados:', data)
-    // Si quieres impedir el diálogo cuando falte algo, descomenta:
-    // if (genderInvalid || languageInvalid || !data.name || !data.surname || !data.age || !data.terms) return;
 
-    setOpen(true) // Se abre el diálogo modal al enviar
+    setOpen(true) 
   }
 
   const handleClear = () => {
@@ -51,14 +54,17 @@ export default function App() {
 
   const genderInvalid = touched && !data.gender
   const languageInvalid = touched && !data.language
+  const nameInvalalid = touched && !data.language
 
   return (
     <Container sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
         <Box component="form" noValidate onSubmit={handleSubmit}>
           <GridItem container spacing={2}>
-            {/* Nombre y Apellidos (requeridos) */}
+          
             <GridItem item xs={12} md={6}>
+              <FormControl required error={nameInvalalid} component="text" variant="standard" fullWidth>
+                
               <TextField
                 fullWidth required
                 label="Nombre"
@@ -66,6 +72,8 @@ export default function App() {
                 value={data.name}
                 onChange={handleChange}
               />
+              {nameInvalalid && <FormHelperText>* Campo Requerido</FormHelperText>}
+              </FormControl>
             </GridItem>
             <GridItem item xs={12} md={6}>
               <TextField
@@ -77,7 +85,7 @@ export default function App() {
               />
             </GridItem>
 
-            {/* Edad (number) */}
+        
             <GridItem item xs={12} md={6}>
               <TextField
                 fullWidth required
@@ -90,7 +98,7 @@ export default function App() {
               />
             </GridItem>
 
-            {/* Género (RadioGroup requerido) */}
+          
             <GridItem item xs={12} md={6}>
               <FormControl required error={genderInvalid} component="fieldset" variant="standard" fullWidth>
                 <FormLabel component="legend">Género</FormLabel>
@@ -100,7 +108,6 @@ export default function App() {
                   value={data.gender}
                   onChange={handleChange}
                 >
-                  {/* Marcamos required en al menos un radio para activar la regla de grupo */}
                   <FormControlLabel value="h" control={<Radio inputProps={{ required: true }} />} label="Hombre" />
                   <FormControlLabel value="m" control={<Radio />} label="Mujer" />
                   <FormControlLabel value="o" control={<Radio />} label="Otro" />
@@ -109,7 +116,7 @@ export default function App() {
               </FormControl>
             </GridItem>
 
-            {/* Select requerido (lenguaje de programación favorito o el tema que elijas) */}
+            
             <GridItem item xs={12} md={6}>
               <FormControl required error={languageInvalid} fullWidth>
                 <InputLabel id="lang-label" required>Lenguaje favorito</InputLabel>
@@ -132,7 +139,6 @@ export default function App() {
               </FormControl>
             </GridItem>
 
-            {/* Rating (controlado) */}
             <GridItem item xs={12} md={6}>
               <FormLabel component="legend">Satisfacción</FormLabel>
               <Stack direction="row" alignItems="center" spacing={1}>
@@ -145,7 +151,7 @@ export default function App() {
               </Stack>
             </GridItem>
 
-            {/* Checkbox condiciones + botones */}
+          
             <GridItem item xs={12}>
               <FormControlLabel
                 control={
@@ -173,7 +179,6 @@ export default function App() {
         </Box>
       </Paper>
 
-      {/* Dialog modal de confirmación */}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Confirmar envío</DialogTitle>
         <DialogContent>
